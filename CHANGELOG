@@ -1,0 +1,99 @@
+2016-11-04
+  Nova funkce pro odeslani emailu s odkazem pro vygenerovani hesla CZ kontaktu *gen contact gr password*
+
+2016-07-08
+  Nova funkce pro kontrolu dostupnosti CZ kontaktu *check contact availability*
+
+2016-05-13
+  Nova funkce pro zapnuti ignorovani domeny *ignore domain*
+
+2016-04-01
+  Nova funkce pro overovani existence kontaktu *check contact existence*
+
+2015-11-04
+  U prohlizeni domen bylo zruseno omezeni, ze lze prohlizet pouze domeny patrici do portfolia daneho klienta
+
+  Lze tedy prohlizet jakoukoli existujici domenu s podporovanou koncovkou. Pokud vsak domena neni spravovana prostrednictvim sluzby Domain Master, mohou nektere jeji udaje chybet.
+
+2015-11-03
+  Nova funkce *change cz domain owner* pro vytvoreni zadosti o zmenu majitele cz domeny
+
+2014-10-25
+  U prohlizeni generickych domen je nyni uvaden registrator ("tucows" nebo "directi")
+
+2014-04-22
+  Novy prikaz *show nsset* pro prohlizeni nssetu pro cz domeny
+
+2014-04-19
+  Prikazem "show domain" lze prohlizet i minoritni domeny
+
+2013-08-20
+  Moznost kodovat prenasena data do json (experimentalni funkce)
+
+2013-07-25
+  Defaultni znakove kodovani je UTF-8 (do ted to bylo ISO-8859-2)
+
+  Vystup volani *show domain* nyni obsahuje pole *status*, kde najdete stavy domeny.
+  Pokud jste si v Domain Masteru u nektere domeny zaktivovali jeji ignorovani, bude mit status
+
+    ignored: You are ignoring this domain
+
+2013-05
+  u generickych domen byl zrusen billing kontakt
+
+2012-07-18
+  funkce pro manipulaci s DNS zaznamy na nasich nameserverech
+
+2012-04-16
+  nova funkce *send contact auth info*
+
+2012-01-02
+  U prohlizeni cz domen a ENUM jiz neplati omezeni, ze je nutne byt platcem nebo dealerem domeny
+  Byla doplnena nova metoda pro prohlizeni kontaktu *show contact*
+
+2011-12-30
+  Nova metoda pro registraci keysetu: *register cz keyset*
+
+2009-09-15
+  Metoda $mapi_client->sendCommand() nyni prijima ve volitelnem 3. parametru autorizaci.
+  Doplnen prikaz *update cz domain*
+  !!! doslo k uprave souboru miniyaml.inc a masterapi_client.inc - nutna aktualizace
+
+2009-01-13
+  Do registrace cz domeny byla doplnena moznost nastavit id keysetu.
+
+2008-11-07
+  Doplnen prikaz pro registraci platce.
+
+  Dale byly upraveny funkce pro registraci domen tak, ze je mozne do idacc uvest
+  identifikator jineho platce. Domena v tomto pripade vsak nebude okamzite zaregistrovana,
+  ale danemu platci bude e-mailem zaslana vyzva k platbe. Je vsak nutne uvest vlastni
+  identifikator jako iddealer.
+
+2008-08-13
+  registrace nadnarodniho kontaktu a nadnarodni domeny (.com, .net, .org, .info,
+  .biz a .name) - prikazy *register generic contact* a *register generic domain*
+
+2008-04-11
+  volanim *renew domain* je nyni mozne prodlouzit i nadnarodni domenu
+
+2008-04-09
+  nove funkce *register eu contact* a *register eu domain*
+  doplnena moznost prodlouzit eu domenu
+  doslo k male uprave ve tride miniYAML (soubor miniyaml.inc)
+
+2008-03-25
+  nova funkce *send domain auth info*
+
+2008-01-31
+  nova funkce *show domain*
+  zavedeni penaltoveho systemu:
+   po 2 chybach je klient blokovan do konce minuty
+   po 6 chybach je klient blokovan do konce hodiny
+  !!! doslo k uprave tridy miniYAML (soubor miniyaml.inc) - nutna aktualizace
+
+2008-01-11
+  nove funkce *register cz nsset* a *check domains availability*
+  !!! doslo k uprave tridy miniYAML (soubor miniyaml.inc) - nutna aktualizace
+
+// vim: expandtab

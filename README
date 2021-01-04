@@ -1,0 +1,126 @@
+Master API klient pro PHP
+-------------------------
+Pomoci klienta je mozne odesilat prikazy, ktere budou okamzite na strane Master API
+serveru provedeny. Napriklad registrace domeny muze byt realizovana na jediny HTTP
+pozadavek; celkovy cas potrebny pro registraci nebude delsi nez jen nekolik malo
+vterin.
+
+Klient je testovan na PHP verze 5.3 a 4.4.
+
+Klient komunikuje na HTTP protokolu pres SSL. Pro navazani socketoveho spojeni pres SSL
+je nutne do PHP nainstalovat rozsireni OpenSSL.
+
+Changelog
+---------
+http://www.domainmaster.cz/masterapi/client/CHANGELOG
+
+Potrebne knihovny
+-----------------
+Soubory jsou soucasti dodavky.
+
+  <?php
+  require("miniyaml.inc");            // minimalisticky YAML parser
+  require("masterapi_client.inc");    // tridy Master API klienta
+  ?>
+
+Inicializace klienta
+--------------------
+URL testovaciho serveru: http://test-api.domainmaster.cz/masterapi/server.php
+URL ostreho serveru: https://www.domainmaster.cz/masterapi/server.php
+
+Testovaci Master API server je provozovan nad ne prilis aktualni kopii ostre databaze.
+Instance je napojena na testovaci rozhrani CZ.NICu. Pokud budete chtit vyzkouset
+testovaci Master API server, kontaktujte nas e-mailem na adrese
+info[at]generalregistry[dot]cz.
+
+Pomoci parametru "charset" je mozne nastavit pouzitou znakovou sadu, ve ktere budou
+zasilany parametry prikazu (napr. u registrace kontaktu pro .cz domeny).
+
+  <?php
+  $client = new MasterApi_Client(array(
+    "username" => "GR:PLATCE",        // prihlasovaci jmeno platce (idacc nebo iddealer)
+    "password" => "heslo",            // heslo platce
+    "charset" => "UTF-8",      // mozna kodovani: WINDOWS-1250, ISO-8859-2, UTF-8
+    "server_url" => "https://www.domainmaster.cz/masterapi/server.php",
+  ));
+  ?>
+
+Implementace klienta
+--------------------
+Volanim metody SendCommand() bude odeslan prikaz do Master API serveru. Vracen bude objekt,
+ktery popisuje 3 stavy:
+
+  * akce dopadla uspesne - pozadavek byl beze zbytku vyrizen
+
+  * doslo k chybe - pozadavek neni mozne zpracovat, duvodem muze byt syntakticka chyba
+    v parametrech, pokus o registraci jiz existujici domeny a podobne.
+
+  * doslo k docasne chybe - prikaz neni mozne z nejake docasne chyboveho stavu realizovat;
+    v takovem pripade je nutne nejakou dobu pockat (5 minut) a odeslat stejny prikaz
+    znovu; POZOR!!! - o realizaci prikazu se opakovane nebude pokouset nas automat
+
+Volanim metody getMessage() u navratoveho objektu lze zjistit popis pripadne chyby.
+
+Nektere typy prikazu vyzaduji parametry. Tyto parametry vychazeji z e-mailoveho API.
+Dokumentace k e-mailovemu API je zde:
+http://www.domainmaster.cz/doc/auto_reg_cz_enum.pdf
+
+Jiste prikazy vraceji nejaka data (napr. "list domains"). Metodou getData() lze tato data
+ziskat. Vraceno je asociativni pole.
+
+  <?php
+  // spusteni prikazu
+  // prvni parametr: nazev prikazu (viz nize v tomto souboru)
+  // druhy volitelny parametr: potrebne parametry daneho prikazu
+  $result = $client->sendCommand("transfer cz domain",array(
+    "transfer" =>    "domena.cz",
+    "auth-info" =>   "kfSkrsmc42",
+    "idacc" =>       "GR:PLATCE",
+    "iddealer" =>    ""
+  ));
+
+  // zpracovani vysledku
+  if($result->IsSuccess()){
+    // uspech
+    echo "commnad was successfuly executed\n";
+    echo "--------------------------------\n";
+    echo "data:\n";
+    print_r($result->getData()); // vrati asociativni pole nebo null (podle charakteru odpovedi)
+  }else{
+    // NEUSPECH!
+    // pokud $this->IsTemporaryError() vrati true - jedna se pravdepodobne o docasnou chybu -> nutno pockat 5 minut a pak stejny prikaz odeslat znovu
+    echo "commnad WAS NOT executed successfuly\n";
+    echo "------------------------------------\n";
+    echo "message: ".$result->getMessage()."\n"; // popis chyby
+    echo "temporary error: ".($result->IsTemporaryError() ? "yes (request should be repeated)" : "no")."\n";
+    echo "------------------------------------\n";
+    // pro debug ucely je mozne pouzit nasledujici metody
+    // echo "http request:\n";
+    // echo $result->getHttpRequest()."\n";
+    // echo "http response:\n";
+    // echo $result->getHttpResponse()."\n";
+  }
+  ?>
+
+Penaltovy system
+----------------
+Master API zaznamenava pozadavky, ktere skoncily chybou (nikoli docasnou).
+Pri dosazeni urciteho poctu chyb bude klient pred pouzitim Master API blokovan:
+ - po dosazeni 2 chyb je klient blokovan do konce aktualni minuty
+ - po dosazeni 6 chyb je klient blokovan do konce aktualni hodiny
+
+Je-li klient blokovan, bude mu na kazdy dalsi prikaz vracena docasna chyba se zpravou:
+"you are blocked from the Master API because of abusive usage"
+
+Funkce Master Api
+-----------------
+Viz http://www.domainmaster.cz/master-api/dokumentace/
+
+
+
+
+
+
+
+
+// vim: expandtab
