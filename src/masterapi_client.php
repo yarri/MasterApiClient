@@ -32,7 +32,7 @@ class MasterApi_Client{
 	 * @access public
 	 * @param array
 	 */
-	function MasterApi_Client($params = array()){
+	function __construct($params = array()){
 		$params = array_merge(array(
 			"username" => "",
 			"password" => "",
@@ -160,7 +160,7 @@ class MasterApi_ClientResult{
 
 	var $_NetworkError = null; 
 
-	function MasterApi_ClientResult($params){
+	function __construct($params){
 		$params = (array)$params;
 		$params += array(
 			"http_request" => null,
