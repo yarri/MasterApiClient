@@ -161,11 +161,12 @@ class MasterApi_ClientResult{
 	var $_NetworkError = null; 
 
 	function MasterApi_ClientResult($params){
-		$params = array_merge(array(
+		$params = (array)$params;
+		$params += array(
 			"http_request" => null,
 			"http_response" => null,
 			"network_error" => null,
-		),$params);
+		);
 
 		$this->_HttpRequest = $params["http_request"];
 		$this->_NetworkError = $params["network_error"];
