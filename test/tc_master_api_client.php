@@ -12,16 +12,16 @@ class TcMasterApiClient extends TcBase {
 		$result = $client->sendCommand("show domain",array(
 			"domain" => "domainmaster.cz"
 		));
-		$this->assertTrue($result->isSuccess());
+		$this->assertTrue($result->isSuccess(),print_r($result,true));
 		$domain_info = $result->getData();
 		$this->assertEquals("domainmaster.cz",$domain_info["domain"]);
 
 		$result = $client->sendCommand("credit info");
-		$this->assertTrue($result->isSuccess());
+		$this->assertTrue($result->isSuccess(),print_r($result,true));
 		$credit_info = $result->getData();
 		$this->assertEquals(array("CZK","EUR"),array_keys($credit_info));
 
 		$result = $client->sendCommand("list domains");
-		$this->assertTrue($result->isSuccess());
+		$this->assertTrue($result->isSuccess(),print_r($result,true));
 	}
 }
