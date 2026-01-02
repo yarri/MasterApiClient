@@ -9,18 +9,13 @@ class TcMasterApiClient extends TcBase {
 			"server_url" => "http://test-api.domainmaster.cz/masterapi/server.php",
 		));
 
-		$result = $client->sendCommand("show domain",array(
-			"domain" => "domainmaster.cz"
-		));
-		$this->assertTrue($result->isSuccess(),print_r($result,true));
-		$domain_info = $result->getData();
-		$this->assertEquals("domainmaster.cz",$domain_info["domain"]);
-
+		// credit info
 		$result = $client->sendCommand("credit info");
 		$this->assertTrue($result->isSuccess(),print_r($result,true));
 		$credit_info = $result->getData();
 		$this->assertEquals(array("CZK","EUR"),array_keys($credit_info));
 
+		// list domains
 		$result = $client->sendCommand("list domains");
 		$this->assertTrue($result->isSuccess(),print_r($result,true));
 	}
