@@ -1,5 +1,8 @@
 Master API klient pro PHP
--------------------------
+=========================
+
+[![Build Status](https://app.travis-ci.com/yarri/MasterApiClient.svg?token=Kc7UxgK5oqFG8sZAhCzg&branch=master)](https://app.travis-ci.com/yarri/MasterApiClient)
+
 Pomoci klienta je mozne odesilat prikazy, ktere budou okamzite na strane Master API
 serveru provedeny. Napriklad registrace domeny muze byt realizovana na jediny HTTP
 pozadavek; celkovy cas potrebny pro registraci nebude delsi nez jen nekolik malo
