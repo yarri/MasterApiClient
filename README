@@ -5,7 +5,7 @@ serveru provedeny. Napriklad registrace domeny muze byt realizovana na jediny HT
 pozadavek; celkovy cas potrebny pro registraci nebude delsi nez jen nekolik malo
 vterin.
 
-Klient je testovan na PHP verze 5.3 a 4.4.
+Klient je testovan na PHP ve verzich 5.6 az 8.4.
 
 Klient komunikuje na HTTP protokolu pres SSL. Pro navazani socketoveho spojeni pres SSL
 je nutne do PHP nainstalovat rozsireni OpenSSL.
