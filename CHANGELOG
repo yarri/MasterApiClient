@@ -1,3 +1,6 @@
+2026-05-17 Version 1.1.1
+  * 7393786 - composer.json updated: "atk14/mimi-yaml" is required in version "^1.1"
+
 2026-01-02 Version 1.1
   * 8adb9df - Package is compatible with PHP>=5.6
   * 0117fe0 - Library miniYAML installed from atk14/mini-yaml package
